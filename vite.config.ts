@@ -16,6 +16,7 @@ export default defineConfig({
         short_name: "PWA Demo",
         description: "A description for my PWA",
         theme_color: "#ffffff",
+        display: 'standalone',
         icons: [
           {
             src: "/ios/192.png", // You need to generate these icons
