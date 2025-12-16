@@ -16,6 +16,7 @@ export default defineConfig({
         short_name: "Tiny Demo",
         description: "A tiny demo for PWA",
         theme_color: "#ffffff",
+        display: "fullscreen",
         icons: [
           {
             src: "/images/icon.png", // You need to generate these icons
