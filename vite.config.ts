@@ -9,8 +9,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: "autoUpdate", // Automatically update the service worker
-      injectRegister: "auto",
+      registerType: "autoUpdate",
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.ts",
       manifest: {
         name: "The Tiny Demo",
         short_name: "Tiny Demo",

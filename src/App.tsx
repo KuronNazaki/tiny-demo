@@ -25,6 +25,25 @@ function App() {
     Number.parseInt(localStorage.getItem("count") ?? "0")
   );
 
+  const [offlineStatus, setOfflineStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((registration) => {
+        if (registration.active) {
+          setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
+        }
+      });
+
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "CACHE_READY") {
+          console.log(event.data.message);
+          setOfflineStatus("Đã tải hoàn tất, bạn có thể sử dụng ngoại tuyến!");
+        }
+      });
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("count", String(count));
   }, [count]);
@@ -49,7 +68,9 @@ function App() {
           <RotateCw />
         </div>
       </div>
-      <div className="h-20 shrink-0 bg-rose-500 w-full"></div>
+      <div className="h-20 shrink-0 bg-rose-500 w-full flex justify-center items-center text-white font-semibold text-center">
+        {offlineStatus || "Đang kiểm tra..."}
+      </div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <div className="flex gap-5 justify-center">
           <a href="https://vite.dev" target="_blank">
