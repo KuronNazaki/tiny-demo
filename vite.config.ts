@@ -15,7 +15,6 @@ export default defineConfig({
         name: "The Tiny Demo",
         short_name: "Tiny Demo",
         description: "A tiny demo for PWA",
-        theme_color: "#ffffff",
         display: "standalone",
         icons: [
           {
