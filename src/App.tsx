@@ -36,10 +36,12 @@ function App() {
           top: (isRefreshing ? REFRESH_THRESHOLD : pullPosition) / 3,
           opacity: isRefreshing || pullPosition > 0 ? 1 : 0,
         }}
-        className="bg-teal-100 fixed inset-x-1/2 z-30 h-8 w-8 -translate-x-1/2 rounded-full p-2 shadow"
+        className="bg-rose-50 fixed inset-x-1/2 z-30 h-8 w-8 -translate-x-1/2 rounded-full p-2 shadow"
       >
         <div
-          className={`h-full w-full ${isRefreshing ? "animate-spin" : ""}`}
+          className={`h-full w-full flex justify-center text-rose-600 items-center ${
+            isRefreshing ? "animate-spin" : ""
+          }`}
           style={
             !isRefreshing ? { transform: `rotate(${pullPosition}deg)` } : {}
           }
