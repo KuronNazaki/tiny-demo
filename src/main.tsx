@@ -3,32 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { registerSW } from "virtual:pwa-register";
-// import PullToRefresh from "pulltorefreshjs";
 
-// // Check if the app is in standalone mode on iOS
-// const isInWebAppiOS = window.navigator.standalone === true;
-
-// if (isInWebAppiOS) {
-//   PullToRefresh.init({
-//     mainElement: "body", // Or the specific scrollable element
-//     onRefresh() {
-//       // The action to perform when refreshed (e.g., reload page, fetch new data)
-//       window.location.reload();
-//     },
-//   });
-// }
-
-// add this to prompt for a refresh
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm("New content available. Reload?")) {
-      updateSW(true);
-    }
-  },
-  onOfflineReady() {
-    alert("App ready to work offline!");
-  },
-});
+registerSW();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
