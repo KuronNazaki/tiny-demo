@@ -2,8 +2,27 @@ import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { usePullToRefresh } from "use-pull-to-refresh";
+
+const MAXIMUM_PULL_LENGTH = 240;
+const REFRESH_THRESHOLD = 180;
+
+const handleRefresh = () => {
+  // Add a check to ensure we are in a browser environment
+  if (typeof window !== "undefined") {
+    window.location.reload();
+  }
+  // Alternatively, for a data-only refresh, you would call a function to re-fetch data here.
+};
 
 function App() {
+  const { isRefreshing, pullPosition } = usePullToRefresh({
+    // you can choose what behavior for `onRefresh`, could be calling an API to load more data, or refresh whole page.
+    onRefresh: handleRefresh,
+    maximumPullLength: MAXIMUM_PULL_LENGTH,
+    refreshThreshold: REFRESH_THRESHOLD,
+  });
+
   const [count, setCount] = useState(() =>
     Number.parseInt(localStorage.getItem("count") ?? "0")
   );
@@ -14,6 +33,24 @@ function App() {
 
   return (
     <main className="flex flex-col items-center w-full h-dvh overflow-hidden bg-white">
+      <div
+        style={{
+          // Note: In React, style values are typically numbers or strings with units.
+          // The original calculation is retained for positioning.
+          top: (isRefreshing ? REFRESH_THRESHOLD : pullPosition) / 3,
+          opacity: isRefreshing || pullPosition > 0 ? 1 : 0,
+        }}
+        // Note: You must ensure these Tailwind CSS classes ('bg-base-100', etc.) are loaded/functional
+        // in your standard React application (e.g., via a build tool like Vite/CRA with PostCSS).
+        className="bg-base-100 fixed inset-x-1/2 z-30 h-8 w-8 -translate-x-1/2 rounded-full p-2 shadow"
+      >
+        <div
+          className={`h-full w-full ${isRefreshing ? "animate-spin" : ""}`}
+          style={
+            !isRefreshing ? { transform: `rotate(${pullPosition}deg)` } : {}
+          }
+        ></div>
+      </div>
       <div className="h-20 shrink-0 bg-rose-500 w-full"></div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <div className="flex gap-5 justify-center">
