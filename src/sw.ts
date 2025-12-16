@@ -4,7 +4,6 @@ import { clientsClaim } from "workbox-core";
 
 declare const self: ServiceWorkerGlobalScope;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _VERSION_TEST = "v0.0.1";
 
 precacheAndRoute(self.__WB_MANIFEST);
@@ -17,7 +16,7 @@ self.addEventListener("install", (event) => {
       clients.forEach((client) => {
         client.postMessage({
           type: "CACHE_READY",
-          message: "Ứng dụng đã sẵn sàng chạy ngoại tuyến!",
+          message: "Ứng dụng đã sẵn sàng chạy ngoại tuyến! " + _VERSION_TEST,
         });
       });
     })

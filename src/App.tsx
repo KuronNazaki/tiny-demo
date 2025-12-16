@@ -29,11 +29,11 @@ function App() {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.ready.then((registration) => {
-        if (registration.active) {
-          setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
-        }
-      });
+      // navigator.serviceWorker.ready.then((registration) => {
+      //   if (registration.active) {
+      //     setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
+      //   }
+      // });
 
       navigator.serviceWorker.addEventListener("message", (event) => {
         if (event.data && event.data.type === "CACHE_READY") {
@@ -80,7 +80,7 @@ function App() {
             <img src={reactLogo} className="logo react" alt="React logo" />
           </a>
         </div>
-        <h1 className="font-semibold">Tiny Demo 6</h1>
+        <h1 className="font-semibold">Tiny Demo 7</h1>
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)}>
             count is {count}
