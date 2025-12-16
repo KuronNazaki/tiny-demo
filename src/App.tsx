@@ -13,7 +13,7 @@ function App() {
   }, [count]);
 
   return (
-    <main className="flex flex-col items-center w-full h-dvh overflow-hidden">
+    <main className="flex flex-col items-center w-full h-dvh overflow-hidden bg-white">
       <div className="h-20 shrink-0 bg-rose-500 w-full"></div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <div className="flex gap-5 justify-center">
@@ -24,7 +24,7 @@ function App() {
             <img src={reactLogo} className="logo react" alt="React logo" />
           </a>
         </div>
-        <h1 className="font-semibold">Tiny Demo 5</h1>
+        <h1 className="font-semibold">Tiny Demo 6</h1>
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)}>
             count is {count}
