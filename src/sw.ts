@@ -4,7 +4,7 @@ import { clientsClaim } from "workbox-core";
 
 declare const self: ServiceWorkerGlobalScope;
 
-const _VERSION_TEST = "v0.0.4";
+const _VERSION_TEST = "v0.0.5";
 
 precacheAndRoute(self.__WB_MANIFEST);
 
@@ -21,4 +21,5 @@ self.addEventListener("install", (event) => {
       });
     })
   );
+  self.skipWaiting();
 });
