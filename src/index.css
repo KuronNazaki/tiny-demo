@@ -16,6 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -26,7 +32,9 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  height: 100%;
+  overflow: auto;
+  position: relative;
 }
 
 h1 {
