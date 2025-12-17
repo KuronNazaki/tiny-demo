@@ -39,7 +39,7 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
 
     // Send a message back to the client (optional)
-    event.source?.postMessage("SKIP_WAITING_ACK");
+    // event.source?.postMessage("SKIP_WAITING_ACK");
   }
 });
 
@@ -64,9 +64,7 @@ self.addEventListener("activate", (event) => {
         console.log("Service Worker activating...", clients);
         clients.forEach((client) => {
           // Now, the client is controlled by this active Service Worker
-          client.postMessage(
-            "Ứng dụng đã sẵn sàng chạy ngoại tuyến! " + _VERSION_TEST
-          );
+          client.postMessage("SKIP_WAITING_ACK");
         });
       });
     })
