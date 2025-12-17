@@ -4,7 +4,7 @@ import { clientsClaim } from "workbox-core";
 
 declare const self: ServiceWorkerGlobalScope;
 
-const _VERSION_TEST = "v0.0.17";
+const _VERSION_TEST = "v0.0.18";
 
 precacheAndRoute(self.__WB_MANIFEST);
 
