@@ -13,6 +13,16 @@ const handleRefresh = () => {
     window.location.reload();
   }
 };
+// const sendMessageNative = () => {
+//   if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+//     navigator.serviceWorker.controller.postMessage({
+//       type: "SKIP_WAITING",
+//       data: { key: "value" },
+//     });
+//   } else {
+//     console.error("Service worker controller not active or found.");
+//   }
+// };
 
 function App() {
   const { isRefreshing, pullPosition } = usePullToRefresh({
@@ -27,26 +37,50 @@ function App() {
 
   const [offlineStatus, setOfflineStatus] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null)
+  const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null)
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then((registration) => {
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && registration.waiting) {
+                console.log("New service worker installed and waiting.");
+                setNewWorkerWaiting("A new version is available");
+                setNewWorker(newWorker);
+              }
+            });
+          }
+        });
+
+        // 3. Optional: Initial check if a worker is already waiting (e.g., after a fresh page load)
+        if (registration.waiting) {
+          console.log("Service worker is waiting.");
+        }
         if (registration.active) {
           setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
         }
       });
 
-      navigator.serviceWorker.onmessage = (event) => {
-        if (event.data && event.data.type === "CACHE_READY") {
-          setMessage(event.data.message);
-        }
-      };
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        console.log("Message from service worker:", event.data);
+        setMessage(event.data);
+      });
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("count", String(count));
   }, [count]);
+
+  const skip = () => {
+    if (newWorker) {
+      newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
+    }
+  }
 
   return (
     <main className="flex flex-col items-center w-full h-dvh overflow-hidden bg-white">
@@ -70,7 +104,14 @@ function App() {
       </div>
       <div className="h-20 shrink-0 bg-rose-500 w-full flex justify-center items-center text-white font-semibold text-center">
         {offlineStatus || "Đang kiểm tra..."}
-        {message || "nah"}
+        {message || " nah"}
+        <div>{newWorkerWaiting || 'No'}</div>
+        <button
+          className="ml-4 underline"
+          onClick={skip}
+        >
+          Cập nhật ngay
+        </button>
       </div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <div className="flex gap-5 justify-center">
