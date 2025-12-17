@@ -37,8 +37,8 @@ function App() {
 
   const [offlineStatus, setOfflineStatus] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null)
-  const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null)
+  const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
+  const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -66,6 +66,11 @@ function App() {
       });
 
       navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data === "SKIP_WAITING_ACK") {
+          handleRefresh();
+          return;
+        }
+
         console.log("Message from service worker:", event.data);
         setMessage(event.data);
       });
@@ -80,7 +85,7 @@ function App() {
     if (newWorker) {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
     }
-  }
+  };
 
   return (
     <main className="flex flex-col items-center w-full h-dvh overflow-hidden bg-white">
@@ -105,11 +110,8 @@ function App() {
       <div className="h-20 shrink-0 bg-rose-500 w-full flex justify-center items-center text-white font-semibold text-center">
         {offlineStatus || "Đang kiểm tra..."}
         {message || " nah"}
-        <div>{newWorkerWaiting || 'No'}</div>
-        <button
-          className="ml-4 underline"
-          onClick={skip}
-        >
+        <div>{newWorkerWaiting || "No"}</div>
+        <button className="ml-4 underline" onClick={skip}>
           Cập nhật ngay
         </button>
       </div>
@@ -122,7 +124,7 @@ function App() {
             <img src={reactLogo} className="logo react" alt="React logo" />
           </a>
         </div>
-        <h1 className="font-semibold">Tiny Demo 13</h1>
+        <h1 className="font-semibold">Tiny Demo 14</h1>
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)}>
             count is {count}

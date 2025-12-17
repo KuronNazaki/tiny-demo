@@ -39,7 +39,7 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
 
     // Send a message back to the client (optional)
-    // event.source.postMessage("SW received your native message!");
+    event.source?.postMessage("SKIP_WAITING_ACK");
   }
 });
 
