@@ -39,6 +39,9 @@ function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
+  const [currentWorker, setCurrentWorker] = useState<ServiceWorker | null>(
+    null
+  );
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -62,6 +65,7 @@ function App() {
         }
         if (registration.active) {
           setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
+          setCurrentWorker(registration.active);
         }
       });
 
@@ -84,6 +88,11 @@ function App() {
   const skip = () => {
     if (newWorker) {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
+    }
+  };
+  const sendMessage = () => {
+    if (currentWorker) {
+      currentWorker.postMessage("Hello from the main app!");
     }
   };
 
@@ -131,6 +140,7 @@ function App() {
           <button onClick={() => setCount((count) => count + 1)}>
             count is {count}
           </button>
+          <button onClick={sendMessage}>Trigger message</button>
         </div>
         <p className="mt-10">
           What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing

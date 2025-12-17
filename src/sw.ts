@@ -37,10 +37,14 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     console.log("SW received:", _VERSION_TEST, event.data.data);
     self.skipWaiting();
-
+    return;
     // Send a message back to the client (optional)
     // event.source?.postMessage("SKIP_WAITING_ACK");
   }
+
+  self.registration.showNotification("Service Worker Message", {
+    body: `Received message: ${event.data}`,
+  });
 });
 
 self.addEventListener("install", (event) => {
