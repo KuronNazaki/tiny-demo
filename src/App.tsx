@@ -39,9 +39,9 @@ function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
-  const [currentWorker, setCurrentWorker] = useState<ServiceWorker | null>(
-    null
-  );
+  // const [currentWorker, setCurrentWorker] = useState<ServiceWorker | null>(
+  //   null
+  // );
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -65,7 +65,7 @@ function App() {
         }
         if (registration.active) {
           setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
-          setCurrentWorker(registration.active);
+          // setCurrentWorker(registration.active);
         }
       });
 
@@ -90,10 +90,16 @@ function App() {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
     }
   };
-  const sendMessage = () => {
-    if (currentWorker) {
-      currentWorker.postMessage("Hello from the main app!");
+  const sendMessage = async () => {
+    const result = await Notification.requestPermission();
+    if (result === "granted") { 
+      new Notification("Hello World", {
+        body: "You can now receive notifications!",
+      });
     }
+    // if (currentWorker) {
+    //   currentWorker.postMessage("Hello from the main app!");
+    // }
   };
 
   return (

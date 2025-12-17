@@ -42,9 +42,13 @@ self.addEventListener("message", (event) => {
     // event.source?.postMessage("SKIP_WAITING_ACK");
   }
 
-  self.registration.showNotification("Service Worker Message", {
-    body: `Received message: ${event.data}`,
-  });
+  if (Notification.permission === "granted") {
+    self.registration.showNotification("Service Worker Message", {
+      body: `Received message: ${event.data}`,
+    });
+  } else {
+    Notification.requestPermission();
+  }
 });
 
 self.addEventListener("install", (event) => {
