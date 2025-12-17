@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import ParsLogo from "/pars.svg";
 import "./App.css";
 import { usePullToRefresh } from "use-pull-to-refresh";
 import { RotateCw } from "lucide-react";
@@ -107,18 +107,20 @@ function App() {
           <RotateCw />
         </div>
       </div>
-      <div className="h-20 shrink-0 bg-rose-500 w-full flex justify-center items-center text-white font-semibold text-center">
-        {offlineStatus || "Đang kiểm tra..."}
-        {message || " nah"}
-        <div>{newWorkerWaiting || "No"}</div>
-        <button className="ml-4 underline" onClick={skip}>
-          Cập nhật ngay
-        </button>
+      <div className="h-40 shrink-0 bg-black w-full flex flex-col justify-center items-center text-white font-semibold text-center">
+        <div>{offlineStatus || "No status"}</div>
+        <div>{message || "No message"}</div>
+        <div>{newWorkerWaiting || "No worker"}</div>
+        {newWorkerWaiting === "A new version is available" && (
+          <button className="ml-4 text-black bg-black" onClick={skip}>
+            Update now
+          </button>
+        )}
       </div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <div className="flex gap-5 justify-center">
           <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
+            <img src={ParsLogo} className="logo" alt="Vite logo" />
           </a>
           <a href="https://react.dev" target="_blank">
             <img src={reactLogo} className="logo react" alt="React logo" />

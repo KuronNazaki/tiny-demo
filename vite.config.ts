@@ -14,10 +14,12 @@ export default defineConfig({
       srcDir: "src",
       filename: "sw.ts",
       manifest: {
-        name: "The Tiny Demo",
-        short_name: "Tiny Demo",
-        description: "A tiny demo for PWA",
+        name: "The Particles",
+        short_name: "Particles",
+        description: "The Particles Application",
         display: "standalone",
+        theme_color: "#000000",
+        background_color: "#000000",
         icons: [
           {
             src: "/images/icon.png", // You need to generate these icons

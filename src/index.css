@@ -2,6 +2,11 @@
 
 @import "tailwindcss";
 
+@theme {
+  --color-me-green: #38de4d;
+  --color-him-blue: #48e7ff;
+}
+
 :root {
   font-family: Geist, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -35,7 +40,7 @@ body {
   height: 100%;
   overflow: auto;
   position: relative;
-  @apply bg-rose-500;
+  @apply bg-background;
 }
 
 h1 {
