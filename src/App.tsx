@@ -41,6 +41,20 @@ function App() {
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
 
   useEffect(() => {
+    // Mã này chạy sau khi Component đã mount và render lần đầu
+
+    const rootElement = document.getElementById("root");
+    if (rootElement) {
+      // Bỏ ẩn #root, lúc này CSS/giao diện đã sẵn sàng
+      rootElement.style.visibility = "visible";
+
+      // Tùy chọn: Thêm hiệu ứng fade-in nhẹ nhàng
+      // rootElement.style.opacity = 1;
+      // rootElement.style.transition = 'opacity 0.3s ease-in';
+    }
+  }, []);
+
+  useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then((registration) => {
         registration.addEventListener("updatefound", () => {
