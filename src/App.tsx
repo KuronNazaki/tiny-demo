@@ -54,7 +54,6 @@ function App() {
                 console.log("New service worker installed and waiting.");
                 setNewWorkerWaiting("A new version is available");
                 setNewWorker(newWorker);
-                handleRefresh();
               }
             });
           }
