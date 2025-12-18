@@ -44,16 +44,6 @@ body {
   position: relative;
 }
 
-body {
-  background-color: #e7e9ea;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0a0e12;
-  }
-}
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
