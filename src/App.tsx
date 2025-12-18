@@ -46,6 +46,14 @@ function App() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready.then((registration) => {
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            // Check for an update when the app comes to the foreground
+            console.log('Page is visible again, checking for SW update...');
+            window.location.reload();
+          }
+        });
+
         registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
@@ -54,6 +62,7 @@ function App() {
                 console.log("New service worker installed and waiting.");
                 setNewWorkerWaiting("A new version is available");
                 setNewWorker(newWorker);
+                handleRefresh();
               }
             });
           }
@@ -92,7 +101,7 @@ function App() {
   };
   const sendMessage = async () => {
     const result = await Notification.requestPermission();
-    if (result === "granted") { 
+    if (result === "granted") {
       new Notification("Hello World", {
         body: "You can now receive notifications!",
       });
