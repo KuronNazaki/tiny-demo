@@ -40,7 +40,6 @@ body {
   height: 100%;
   overflow: auto;
   position: relative;
-  @apply bg-black;
 }
 
 h1 {
