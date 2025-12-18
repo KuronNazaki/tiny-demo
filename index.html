@@ -23,6 +23,12 @@
         visibility: hidden; /* Ẩn nội dung chính ban đầu */
         /* Hoặc dùng display: none; nhưng visibility: hidden; thường tốt hơn cho transition */
       }
+      body {
+        /* Đảm bảo vùng padding trên cùng là màu tối đồng nhất */
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+        background-clip: padding-box;
+      }
     </style>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
