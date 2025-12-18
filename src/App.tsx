@@ -122,7 +122,7 @@ function App() {
           <RotateCw />
         </div>
       </div>
-      <div className="h-40 shrink-0 bg-me-green dark:bg-him-blue w-full flex flex-col justify-center items-center text-white font-semibold text-center">
+      <div className="h-40 shrink-0 bg-light dark:bg-dark w-full flex flex-col justify-center items-center text-gray-500 dark:text-white font-semibold text-center">
         <div>{offlineStatus || "No status"}</div>
         <div>{message || "No message"}</div>
         <div>{newWorkerWaiting || "No worker"}</div>

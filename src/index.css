@@ -5,6 +5,8 @@
 @theme {
   --color-me-green: #38de4d;
   --color-him-blue: #48e7ff;
+  --color-light: #e7e9ea;
+  --color-dark: #0a0e12;
 }
 
 :root {
@@ -43,12 +45,12 @@ body {
 }
 
 body {
-  background-color: #38de4d;
+  background-color: #e7e9ea;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #48e7ff;
+    background-color: #0a0e12;
   }
 }
 
