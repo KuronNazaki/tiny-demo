@@ -18,6 +18,8 @@ export default defineConfig({
         short_name: "Particles",
         description: "The Particles Application",
         display: "standalone",
+        background_color: "#0a0e12",
+        theme_color: "#0a0e12",
         icons: [
           {
             src: "/images/icon.png", // You need to generate these icons
