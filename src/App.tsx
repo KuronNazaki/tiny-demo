@@ -39,9 +39,6 @@ function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
-  const [currentWorker, setCurrentWorker] = useState<ServiceWorker | null>(
-    null
-  );
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -59,13 +56,9 @@ function App() {
           }
         });
 
-        // 3. Optional: Initial check if a worker is already waiting (e.g., after a fresh page load)
-        if (registration.waiting) {
-          console.log("Service worker is waiting.");
-        }
         if (registration.active) {
-          setOfflineStatus("Đã sẵn sàng ngoại tuyến.");
-          setCurrentWorker(registration.active);
+          setOfflineStatus("Ready to be used offline");
+          // setCurrentWorker(registration.active);
         }
       });
 
@@ -84,38 +77,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("count", String(count));
   }, [count]);
-
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      const isServiceWorkerReload = sessionStorage.getItem("swReloaded");
-      sessionStorage.removeItem("swReloaded");
-
-      if (isServiceWorkerReload === "true") {
-        return;
-      }
-
-      const handlePageShow = (event: PageTransitionEvent) => {
-        if (event.persisted) {
-          return;
-        }
-
-        if (currentWorker) {
-          console.log(
-            "New page load/resume detected. Waiting worker found. Activating..."
-          );
-
-          // Kích hoạt cập nhật
-          handleRefresh();
-        }
-      };
-
-      window.addEventListener("pageshow", handlePageShow);
-
-      return () => {
-        window.removeEventListener("pageshow", handlePageShow);
-      };
-    }
-  }, [currentWorker]);
 
   const skip = () => {
     if (newWorker) {
