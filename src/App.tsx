@@ -2,6 +2,7 @@ import { RotateCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePullToRefresh } from "use-pull-to-refresh";
 import "./App.css";
+import { ThemeProvider } from "./providers/theme-provider";
 import { Button } from "./shared/components/ui/button";
 
 const MAXIMUM_PULL_LENGTH = 240;
@@ -132,42 +133,42 @@ function App() {
   };
 
   return (
-    <main className="flex flex-col items-center w-full h-dvh overflow-hidden">
-      <div
-        style={{
-          top: (isRefreshing ? REFRESH_THRESHOLD : pullPosition) / 3,
-          opacity: isRefreshing || pullPosition > 0 ? 1 : 0,
-        }}
-        className="bg-rose-50 fixed inset-x-1/2 z-30 h-8 w-8 -translate-x-1/2 rounded-full p-2 shadow"
-      >
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <main className="flex flex-col items-center w-full h-dvh overflow-hidden">
         <div
-          className={`h-full w-full flex justify-center text-rose-600 items-center ${
-            isRefreshing ? "animate-spin" : ""
-          }`}
-          style={
-            !isRefreshing ? { transform: `rotate(${pullPosition}deg)` } : {}
-          }
+          style={{
+            top: (isRefreshing ? REFRESH_THRESHOLD : pullPosition) / 3,
+            opacity: isRefreshing || pullPosition > 0 ? 1 : 0,
+          }}
+          className="bg-rose-50 fixed inset-x-1/2 z-30 h-8 w-8 -translate-x-1/2 rounded-full p-2 shadow"
         >
-          <RotateCw />
+          <div
+            className={`h-full w-full flex justify-center text-rose-600 items-center ${
+              isRefreshing ? "animate-spin" : ""
+            }`}
+            style={
+              !isRefreshing ? { transform: `rotate(${pullPosition}deg)` } : {}
+            }
+          >
+            <RotateCw />
+          </div>
         </div>
-      </div>
-      <div className="h-40 shrink-0 bg-light dark:bg-dark w-full flex flex-col justify-center items-center text-gray-500 dark:text-white font-semibold text-center">
-        <div>{offlineStatus || "No status"}</div>
-        <div>{message || "No message"}</div>
-        <div>{newWorkerWaiting || "No worker"}</div>
-        {newWorkerWaiting === "A new version is available" && (
-          <button className="ml-4 text-black bg-black" onClick={skip}>
-            Update now
-          </button>
-        )}
-      </div>
-      <div className="grow flex flex-col items-center overflow-y-scroll p-10">
-        <h1 className="font-semibold">The Subscription</h1>
-        <Button onClick={haptic}>
-          Click me
-        </Button>
-      </div>
-    </main>
+        <div className="h-40 shrink-0 bg-light dark:bg-dark w-full flex flex-col justify-center items-center text-gray-500 dark:text-white font-semibold text-center">
+          <div>{offlineStatus || "No status"}</div>
+          <div>{message || "No message"}</div>
+          <div>{newWorkerWaiting || "No worker"}</div>
+          {newWorkerWaiting === "A new version is available" && (
+            <button className="ml-4 text-black bg-black" onClick={skip}>
+              Update now
+            </button>
+          )}
+        </div>
+        <div className="grow flex flex-col items-center overflow-y-scroll p-10">
+          <h1 className="font-semibold">The Subscription</h1>
+          <Button onClick={haptic}>Click me</Button>
+        </div>
+      </main>
+    </ThemeProvider>
   );
 }
 
