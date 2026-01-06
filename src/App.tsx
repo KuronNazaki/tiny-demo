@@ -30,7 +30,7 @@ function App() {
     refreshThreshold: REFRESH_THRESHOLD,
   });
 
-  const [count, setCount] = useState(() =>
+  const [count] = useState(() =>
     Number.parseInt(localStorage.getItem("count") ?? "0")
   );
 
@@ -96,17 +96,17 @@ function App() {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
     }
   };
-  const sendMessage = async () => {
-    const result = await Notification.requestPermission();
-    if (result === "granted") {
-      new Notification("Hello World", {
-        body: "You can now receive notifications!",
-      });
-    }
-    // if (currentWorker) {
-    //   currentWorker.postMessage("Hello from the main app!");
-    // }
-  };
+  // const sendMessage = async () => {
+  //   const result = await Notification.requestPermission();
+  //   if (result === "granted") {
+  //     new Notification("Hello World", {
+  //       body: "You can now receive notifications!",
+  //     });
+  //   }
+  //   // if (currentWorker) {
+  //   //   currentWorker.postMessage("Hello from the main app!");
+  //   // }
+  // };
   const haptic = () => {
     if (navigator.vibrate) {
       navigator.vibrate([2000, 1000, 2000, 1000, 2000, 1000, 2000]);
