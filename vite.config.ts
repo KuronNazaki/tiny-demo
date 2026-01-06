@@ -15,21 +15,18 @@ export default defineConfig({
       srcDir: "src",
       filename: "sw.ts",
       manifest: {
-        name: "The Particles",
-        short_name: "Particles",
-        description: "The Particles Application",
+        name: "Smoll Subs",
+        short_name: "Smoll Subs",
+        description: "The smollest subscription manager",
         display: "standalone",
-        background_color: "#0a0e12",
-        theme_color: "#0a0e12",
         icons: [
           {
-            src: "/images/icon.png", // You need to generate these icons
+            src: "/images/icon.png",
             sizes: "512x512",
             type: "image/png",
           },
         ],
       },
-      // Add workbox configuration for offline caching strategies if needed
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       },

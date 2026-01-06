@@ -132,7 +132,7 @@ function App() {
   };
 
   return (
-    <main className="flex flex-col items-center w-full h-dvh overflow-hidden bg-white">
+    <main className="flex flex-col items-center w-full h-dvh overflow-hidden">
       <div
         style={{
           top: (isRefreshing ? REFRESH_THRESHOLD : pullPosition) / 3,
@@ -163,7 +163,7 @@ function App() {
       </div>
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <h1 className="font-semibold">The Subscription</h1>
-        <Button className="text-black" onClick={haptic}>
+        <Button onClick={haptic}>
           Click me
         </Button>
       </div>
