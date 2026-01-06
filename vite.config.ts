@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
@@ -35,4 +36,9 @@ export default defineConfig({
       includeAssets: ["**/*"],
     }),
   ],
+  resolve: {
+    alias: {
+      "@pars": path.resolve(__dirname, "./src"),
+    }
+  }
 });
