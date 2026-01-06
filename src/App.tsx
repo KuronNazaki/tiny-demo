@@ -13,16 +13,6 @@ const handleRefresh = () => {
     window.location.reload();
   }
 };
-// const sendMessageNative = () => {
-//   if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-//     navigator.serviceWorker.controller.postMessage({
-//       type: "SKIP_WAITING",
-//       data: { key: "value" },
-//     });
-//   } else {
-//     console.error("Service worker controller not active or found.");
-//   }
-// };
 
 function App() {
   const { isRefreshing, pullPosition } = usePullToRefresh({
@@ -39,20 +29,6 @@ function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
-
-  useEffect(() => {
-    // Mã này chạy sau khi Component đã mount và render lần đầu
-
-    const rootElement = document.getElementById("root");
-    if (rootElement) {
-      // Bỏ ẩn #root, lúc này CSS/giao diện đã sẵn sàng
-      rootElement.style.visibility = "visible";
-
-      // Tùy chọn: Thêm hiệu ứng fade-in nhẹ nhàng
-      // rootElement.style.opacity = 1;
-      // rootElement.style.transition = 'opacity 0.3s ease-in';
-    }
-  }, []);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -97,17 +73,6 @@ function App() {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
     }
   };
-  // const sendMessage = async () => {
-  //   const result = await Notification.requestPermission();
-  //   if (result === "granted") {
-  //     new Notification("Hello World", {
-  //       body: "You can now receive notifications!",
-  //     });
-  //   }
-  //   // if (currentWorker) {
-  //   //   currentWorker.postMessage("Hello from the main app!");
-  //   // }
-  // };
   const haptic = () => {
     if (navigator.vibrate) {
       navigator.vibrate([2000, 1000, 2000, 1000, 2000, 1000, 2000]);
@@ -153,12 +118,12 @@ function App() {
             <RotateCw />
           </div>
         </div>
-        <div className="h-40 shrink-0 bg-light dark:bg-dark w-full flex flex-col justify-center items-center text-gray-500 dark:text-white font-semibold text-center">
+        <div className="h-40 shrink-0 w-full flex flex-col justify-center items-center font-semibold text-center">
           <div>{offlineStatus || "No status"}</div>
           <div>{message || "No message"}</div>
           <div>{newWorkerWaiting || "No worker"}</div>
           {newWorkerWaiting === "A new version is available" && (
-            <button className="ml-4 text-black bg-black" onClick={skip}>
+            <button className="ml-4" onClick={skip}>
               Update now
             </button>
           )}
