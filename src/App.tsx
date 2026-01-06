@@ -26,7 +26,7 @@ function App() {
   );
 
   const [offlineStatus, setOfflineStatus] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
+  const [, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
 
@@ -120,7 +120,7 @@ function App() {
         </div>
         <div className="h-40 shrink-0 w-full flex flex-col justify-center items-center font-semibold text-center">
           <div>{offlineStatus || "No status"}</div>
-          <div>{message || "No message"}</div>
+          {/* <div>{message || "No message"}</div> */}
           <div>{newWorkerWaiting || "No worker"}</div>
           {newWorkerWaiting === "A new version is available" && (
             <button className="ml-4" onClick={skip}>
