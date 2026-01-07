@@ -1,4 +1,11 @@
+import { useHeader } from "@pars/providers/use-header";
+import { useEffect } from "react";
+
 const Home = () => {
+  const { setAction } = useHeader();
+
+  useEffect(() => setAction(null), [setAction]);
+
   return (
     <div>
       Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus
