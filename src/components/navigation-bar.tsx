@@ -41,7 +41,7 @@ const NavigationItem = ({
   return (
     <Button asChild withChildrenStyle onClick={onNavigate}>
       <div
-        className={`flex flex-col justify-center items-center gap-1 transition-transform active:scale-95 active:transition-[transform_0.1s_ease] ${
+        className={`flex flex-col justify-center items-center gap-1 transition-transform active:scale-90 active:transition-[transform_0.25s_ease] ${
           isCurrentNavigation && "text-teal-400"
         }`}
       >
