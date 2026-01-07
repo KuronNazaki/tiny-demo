@@ -1,11 +1,19 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@pars/shared/components/ui/alert-dialog";
 import { RotateCw } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast, Toaster } from "sonner";
 import { usePullToRefresh } from "use-pull-to-refresh";
 import "./App.css";
 import { ThemeProvider } from "./providers/theme-provider";
 import { Button } from "./shared/components/ui/button";
-import { toast, Toaster } from "sonner";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@pars/shared/components/ui/alert-dialog";
 
 const MAXIMUM_PULL_LENGTH = 240;
 const REFRESH_THRESHOLD = 180;
@@ -44,6 +52,7 @@ function App() {
                 console.log("New service worker installed and waiting.");
                 setNewWorkerWaiting("A new version is available");
                 setNewWorker(newWorker);
+                setOpen(true);
               }
             });
           }
@@ -113,11 +122,9 @@ function App() {
           <div>{offlineStatus || "No status"}</div>
           {/* <div>{message || "No message"}</div> */}
           <div>{newWorkerWaiting || "No worker"}</div>
-          {newWorkerWaiting === "A new version is available" && (
-            <Button onClick={skip}>
-              Update now
-            </Button>
-          )}
+          {/* {newWorkerWaiting === "A new version is available" && (
+            <Button onClick={skip}>Update now</Button>
+          )} */}
         </div>
         <div className="grow flex flex-col items-center overflow-y-scroll p-10">
           <h1 className="font-semibold">The Subscription</h1>
@@ -130,15 +137,15 @@ function App() {
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>There is a new version available</AlertDialogTitle>
+            <AlertDialogTitle>
+              There is a new version available
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Please update to ensure a seamless experience.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={skip}>Update</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
