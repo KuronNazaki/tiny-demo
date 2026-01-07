@@ -29,8 +29,8 @@ const NavigationItem = ({
 
   return (
     <Button asChild withChildrenStyle onClick={onNavigate}>
-      <div className="flex flex-col justify-center items-center">
-        <Icon strokeWidth={2.5} />
+      <div className="flex flex-col justify-center items-center gap-1">
+        <Icon />
         <span className="text-xs">{label}</span>
       </div>
     </Button>
