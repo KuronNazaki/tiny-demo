@@ -1,3 +1,5 @@
+import "./navigation-bar.css";
+
 import { useNavigation } from "@pars/providers/use-navigation";
 import { Button } from "@pars/shared/components/ui/button";
 import { ChartPie, CreditCard, Settings } from "lucide-react";
@@ -38,9 +40,9 @@ const NavigationItem = ({
 
   return (
     <Button asChild withChildrenStyle onClick={onNavigate}>
-      <div className="flex flex-col justify-center items-center gap-1">
-        <Icon strokeWidth={isCurrentNavigation ? 3 : undefined} />
-        <span className={`text-xs ${isCurrentNavigation && "font-semibold"}`}>
+      <div className={`flex flex-col justify-center items-center gap-1 ${isCurrentNavigation && "text-teal-400"}`}>
+        <Icon strokeWidth={isCurrentNavigation ? 2.75 : undefined} />
+        <span className={`text-xxs ${isCurrentNavigation && "font-semibold"}`}>
           {label}
         </span>
       </div>
@@ -50,10 +52,12 @@ const NavigationItem = ({
 
 const NavigationBar = () => {
   return (
-    <nav className="fixed bottom-0 left-0 w-full h-20 border-t flex justify-between items-center gap-2 px-10 bg-background">
-      {NAVIGATION_ITEMS.map((item) => (
-        <NavigationItem key={item.name} {...item} />
-      ))}
+    <nav className="fixed bottom-0 left-0 w-full h-28 flex justify-between items-center p-5 navigation-bar">
+      <div className="bg-background rounded-full flex justify-between items-center gap-2 w-full py-3 px-8 border">
+        {NAVIGATION_ITEMS.map((item) => (
+          <NavigationItem key={item.name} {...item} />
+        ))}
+      </div>
     </nav>
   );
 };
