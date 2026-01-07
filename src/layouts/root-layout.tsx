@@ -1,3 +1,4 @@
+import NavigationBar from "@pars/components/navigation-bar";
 import RefreshingPull from "@pars/components/refreshing-pull";
 import { useServiceWorker } from "@pars/providers/use-service-worker";
 import { CloudAlert, CloudCheck } from "lucide-react";
@@ -19,6 +20,7 @@ const RootLayout = () => {
       <div className="grow flex flex-col items-center overflow-y-scroll p-10">
         <Outlet />
       </div>
+      <NavigationBar />
     </main>
   );
 };

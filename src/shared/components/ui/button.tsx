@@ -10,6 +10,7 @@ function Button({
   variant = "default",
   size = "default",
   asChild = false,
+  withChildrenStyle = false,
   withHaptic = true,
   onClick,
   ...props
@@ -17,6 +18,7 @@ function Button({
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     withHaptic?: boolean;
+    withChildrenStyle?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
   const haptic = () => {
@@ -56,7 +58,11 @@ function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={
+        withChildrenStyle
+          ? ""
+          : cn(buttonVariants({ variant, size, className }))
+      }
       onClick={_onClick}
       {...props}
     />
