@@ -41,14 +41,12 @@ const NavigationItem = ({
   return (
     <Button asChild withChildrenStyle onClick={onNavigate}>
       <div
-        className={`flex flex-col justify-center items-center gap-1 ${
+        className={`flex flex-col justify-center items-center gap-1 transition-transform active:scale-95 active:transition-[transform_0.1s_ease] ${
           isCurrentNavigation && "text-teal-400"
         }`}
       >
         <Icon strokeWidth={isCurrentNavigation ? 2.75 : undefined} />
-        <span className={`text-xxs ${isCurrentNavigation && "font-semibold"}`}>
-          {label}
-        </span>
+        <span className={`text-xxs`}>{label}</span>
       </div>
     </Button>
   );
@@ -57,7 +55,7 @@ const NavigationItem = ({
 const NavigationBar = () => {
   return (
     <nav className="fixed bottom-0 left-0 w-full h-28 flex justify-between items-center p-5 navigation-bar">
-      <div className="bg-background/50 rounded-full flex justify-between items-center gap-2 w-full py-3 px-8 border backdrop-blur-md">
+      <div className="bg-background/50 rounded-full flex justify-around items-center w-full py-3 border backdrop-blur-lg">
         {NAVIGATION_ITEMS.map((item) => (
           <NavigationItem key={item.name} {...item} />
         ))}

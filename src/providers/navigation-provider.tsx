@@ -6,7 +6,10 @@ interface NavigationProviderProps {
 }
 
 const NavigationProvider = ({ children }: NavigationProviderProps) => {
-  const [current, setCurrent] = useState("dashboard");
+  const [current, setCurrent] = useState(
+    () => window.location.pathname.split("/")[1] || "dashboard"
+  );
+
   return (
     <NavigationContext.Provider value={{ current, setCurrent }}>
       {children}

@@ -17,3 +17,13 @@
 .navigation-bar {
   background: var(--navigation-bar-background);
 }
+
+.navigation-item::after {
+  display: block;
+  content: attr(title);
+  font-weight: bold;
+  height: 1px;
+  color: transparent;
+  overflow: hidden;
+  visibility: hidden;
+}
