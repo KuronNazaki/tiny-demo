@@ -4,6 +4,8 @@ import { usePullToRefresh } from "use-pull-to-refresh";
 import "./App.css";
 import { ThemeProvider } from "./providers/theme-provider";
 import { Button } from "./shared/components/ui/button";
+import { toast, Toaster } from "sonner";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@pars/shared/components/ui/alert-dialog";
 
 const MAXIMUM_PULL_LENGTH = 240;
 const REFRESH_THRESHOLD = 180;
@@ -29,6 +31,7 @@ function App() {
   const [, setMessage] = useState<string | null>(null);
   const [newWorkerWaiting, setNewWorkerWaiting] = useState<string | null>(null);
   const [newWorker, setNewWorker] = useState<ServiceWorker | null>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -60,6 +63,7 @@ function App() {
 
         console.log("Message from service worker:", event.data);
         setMessage(event.data);
+        toast.info(event.data);
       });
     }
   }, []);
@@ -73,27 +77,14 @@ function App() {
       newWorker.postMessage({ type: "SKIP_WAITING", data: { key: "value" } });
     }
   };
-  const haptic = () => {
-    if (navigator.vibrate) {
-      navigator.vibrate([2000, 1000, 2000, 1000, 2000, 1000, 2000]);
+  const postMessage = () => {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: "SKIP_WAITING",
+        data: { key: "value" },
+      });
     } else {
-      const el = document.createElement("div");
-      const id = Math.random().toString(36).slice(2);
-      el.innerHTML =
-        `<input type="checkbox" id="` +
-        id +
-        `" switch /><label for="` +
-        id +
-        `"></label>`;
-      el.setAttribute(
-        "style",
-        "display:none !important;opacity:0 !important;visibility:hidden !important;"
-      );
-      document.querySelector("body")?.appendChild(el);
-      el.querySelector("label")?.click();
-      setTimeout(function () {
-        el.remove();
-      }, 1500);
+      console.error("Service worker controller not active or found.");
     }
   };
 
@@ -123,16 +114,34 @@ function App() {
           {/* <div>{message || "No message"}</div> */}
           <div>{newWorkerWaiting || "No worker"}</div>
           {newWorkerWaiting === "A new version is available" && (
-            <button className="ml-4" onClick={skip}>
+            <Button onClick={skip}>
               Update now
-            </button>
+            </Button>
           )}
         </div>
         <div className="grow flex flex-col items-center overflow-y-scroll p-10">
           <h1 className="font-semibold">The Subscription</h1>
-          <Button onClick={haptic}>Click me</Button>
+          <Button>Click me</Button>
+          <Button onClick={postMessage}>Post Message to SW</Button>
+          <Button onClick={() => setOpen(true)}>Alert</Button>
         </div>
       </main>
+      <Toaster position={"bottom-center"} />
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>There is a new version available</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </ThemeProvider>
   );
 }
