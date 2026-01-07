@@ -130,7 +130,6 @@ function App() {
           <h1 className="font-semibold">The Subscription</h1>
           <Button>Click me</Button>
           <Button onClick={postMessage}>Post Message to SW</Button>
-          <Button onClick={() => setOpen(true)}>Alert</Button>
         </div>
       </main>
       <Toaster position={"bottom-center"} />
